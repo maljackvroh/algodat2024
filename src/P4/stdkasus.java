@@ -56,6 +56,7 @@ public class stdkasus {
                     break;
                 case 0:
                     System.out.println("Bye!!");
+                    in.close();
                     break;
                 default:
                     System.out.println("pilihan tidak valid");

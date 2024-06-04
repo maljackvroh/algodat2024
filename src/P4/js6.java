@@ -7,6 +7,7 @@ public class js6 {
     public static void main(String[] args) {
         int[] data = new int[14];
         Random random = new Random();
+        Scanner in = new Scanner(System.in);
         
         for (int i = 0; i < data.length; i++) {
             data[i] = random.nextInt(100);
@@ -19,7 +20,7 @@ public class js6 {
 
         int nilaiCari = 0;
         System.out.print("\nMasukkan nilai yang ingin dicari: ");
-        nilaiCari = new Scanner(System.in).nextInt();
+        nilaiCari = in.nextInt();
 
         int indeks = binarySearch(data, 0, data.length - 1, nilaiCari);
 
@@ -28,6 +29,7 @@ public class js6 {
         } else {
             System.out.println("\nNilai " + nilaiCari + " tidak ditemukan.");
         }
+        in.close();
     }
 
     private static int binarySearch(int[] data, int low, int high, int nilaiCari) {

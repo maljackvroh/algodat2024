@@ -29,6 +29,7 @@ public class js5 {
         } else {
             System.out.println("Data " + target + " tidak ditemukan.");
         }
+        scanner.close();
     }
 
     private static int sequentialSearch(int[] data, int target) {
