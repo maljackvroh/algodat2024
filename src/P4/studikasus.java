@@ -37,12 +37,14 @@ public class studikasus {
         
             case 2:
                 insertionSort(data);
+                
                 break;
 
             default:
                 System.out.println("Inputan tidak  valid");
 
         }    
+        in.close();
     }
 
     public static void bubbleSort(int[] data){
