@@ -146,6 +146,7 @@ class User{
                 teller();
             }
         }
+        in.close();
     }
     
     public void nasabah(){
@@ -204,6 +205,7 @@ class User{
             }
             
         }   
+        in.close();
     }
 
 }
