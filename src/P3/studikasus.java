@@ -3,19 +3,20 @@
 //     • Ada 2 menu berbeda untuk teller dan nasabah
 package P3;
 
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 class Queue{
-    private int id;
+    private String id;
     private String nama;
 
-    public Queue(int id, String nama){
+    public Queue(String id, String nama){
         this.id=id;
         this.nama = nama;
     }
 
-    public int getId(){
+    public String getId(){
         return id;
     }
 
@@ -26,114 +27,183 @@ class Queue{
 
 class queueProccess{
     private LinkedList<Queue> queue;
+    
 
     public queueProccess(){
         queue = new LinkedList<>();
     }
 
-    // Dequeue
-    public static void dequeue(){
-
-    }
-
-    // Peek
-    public static void peek(){
-
-    }
-
-    // Enqueue atau status
-    public static void enqueue() {
+    // Dequeue = proses pengambilan elemen di posisi depan 
+    public void dequeue(){
+        if(isEmpty()){
+            System.out.println("Antrian kosong, harap masukan data terlebih dahulu");
+        } else{
+            Queue nam = queue.getFirst();
+            queue.pollFirst();
+            System.out.println(nam+ " telah keluar dari antrian");
+        }
         
     }
 
-
-    // Display
-    public static void display(){
-
+    // Enqueue = proses penambahan elemen di posisi belakang 
+    public void enqueue(Queue qwq) {
+        queue.add(qwq);
+        System.out.println("Antrian berhasil ditambahkan");
     }
 
-    // input
-    public static void input(){
+    // Peek
+    public Queue peek(){
+        if(isEmpty()){
+            Queue qw = queue.getFirst();
+            System.out.println("Antrian teratas: " + qw.getId()+".");
+            System.out.println("Dengan nama: "+qw.getNama()+".");
+            return qw;
+        } else {
+            System.out.println("Stack kosong!");
+            return null;
+        }
+    }
 
+
+
+    // Display
+    public void display(){
+        if(!isEmpty()){
+            System.out.println("====================");
+            System.out.println("Isi antrian");
+            for(Queue queue: queue){
+                System.out.println("ID: "+queue.getId());
+                System.out.println("Nama: "+queue.getNama());
+            }
+            System.out.println("--------------------");
+        } else{
+            System.out.println("Antrian Kosong!");
+        }
+    }
+
+    public boolean isEmpty(){
+        return queue.isEmpty();
+    }
+
+    public int cekUkuran(){
+        return queue.size();
+    }
+
+    public Queue getFirst() {
+        if(isEmpty()){
+            System.out.println("Antrian Kosong, silahkan input terlebih dahulu");
+            return null;
+        } else{
+            return queue.getFirst();
+        }
     }
 }
 
 class User{
+    queueProccess queue = new queueProccess();
+    Boolean exit = true;
     
-    public static void teller(){
+    public void teller(){
         Scanner in = new Scanner(System.in);
+        Boolean exit = true;
 
         System.out.println("Anda adalah teller");
         System.out.println("Silahkan pilih menu:");
         System.out.println("1. Melihat isi Antrian");
         System.out.println("2. Melihat data paling depan");
         System.out.println("3. Mengeluarkan data paling depan");
-        System.out.println("4. Membatalkan data antrian");
-        System.out.println("5. Keluar");
+        System.out.println("4. Keluar");
         System.out.print("Pilihan: ");
         int pill = in.nextInt();
+        // in.nextLine();
         
-        while (pill != 5) {
+        while (exit) {
             switch (pill) {
                 case 1:
-                    System.out.println("case 1");
+                    queue.display();
+                    System.out.println("--------------------");
                     break;
                 case 2:
-                System.out.println("case 2");
+                    queue.getFirst();
+                    System.out.println("--------------------");
                     break;
                 case 3:
-                    System.out.println("case 3");
+                    queue.dequeue();
+                    System.out.println("--------------------");
                     break;
                 case 4:
-                    System.out.println("case 4");
-                    break;
-    
-                case 5:
-    
-                    in.close();
+                    exit = false;
+                    System.out.println("Terima kasih telah menjalankan tugas anda dengan baik!");
+                    System.out.println("--------------------");
                     break;
                 default:
                     System.out.println("Anda salah inputan");
+                    System.out.println("--------------------");
                     break;
+            }   
+
+            if(pill != 4){
+                teller();
             }
         }
-        
     }
     
-    public static void nasabah(){
+    public void nasabah(){
         Scanner in = new Scanner(System.in);
+        Boolean exit = true;
+        int nextId = 0;
+        DecimalFormat df = new DecimalFormat("000");
 
         System.out.println("Anda adalah nasabah");
         System.out.println("Silahkan pilih menu:");
         System.out.println("1. Melihat isi Antrian");
         System.out.println("2. Melihat data paling depan");
-        System.out.println("3. Mengeluarkan data paling depan");
-        System.out.println("4. Membatalkan data antrian");
-        System.out.println("5. Keluar");
+        System.out.println("3. Menambah isi antrian");
+        System.out.println("4. Keluar");
         System.out.print("Pilihan: ");
         int pill = in.nextInt();
+        in.nextLine();
 
-        switch (pill) {
-            case 1:
-                
-                break;
-            case 2:
+        while (exit) {
+            switch (pill) {
+                case 1:
+                    queue.display();
+                    System.out.println("--------------------");
+                    break;
+                case 2:
+                    queue.getFirst();
+                    System.out.println("--------------------");
+                    break;
+                case 3:
 
-                break;
-            case 3:
+                    System.out.print("Masukan nama anda: ");
+                    String name = in.nextLine();
+                    
+                    nextId++;
+                    
+                    String id = df.format(nextId);
+
+                    Queue qwq = new Queue(name, id);
+                    queue.enqueue(qwq);
+                    System.out.println("--------------------");
+                    break;
+                case 4:
+                    exit = false;
+                    System.out.println("Terima kasih telah menjalankan tugas anda dengan baik!");
+                    System.out.println("--------------------");
+                    break;
+
+                default:
+                    System.out.println("Anda salah inputan");
+                    System.out.println("--------------------");
+                    break;
+            }
+
+            if(pill != 4){
+                nasabah();
+            }
             
-                break;
-            case 4:
-
-                break;
-
-            case 5:
-
-                in.close();
-                break;
-            default:
-                break;
-        }
+        }   
     }
 
 }
@@ -142,7 +212,7 @@ public class studikasus{
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        queueProccess queue = new queueProccess();
+        
         User user = new User();
 
         System.out.println("====================================");
@@ -176,13 +246,5 @@ public class studikasus{
                     break;
             }
         }
-    }
-
-    public static void bank(){
-        
-    }
-
-    public static void nasabah(){
-
     }
 }
